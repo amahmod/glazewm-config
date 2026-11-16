@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <script
+      src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"
+      integrity="sha256-aS0B0wnsaDByLfE16h4MDCP1fQFccysd1YWOcV+gbBo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+      import React, {
+        useState,
+        useEffect,
+      } from 'https://esm.sh/react@18?dev';
+      import { createRoot } from 'https://esm.sh/react-dom@18/client?dev';
+      import * as zebar from 'https://esm.sh/zebar@3.0';
+
+      const providers = zebar.createProviderGroup({
+        glazewm: { type: 'glazewm' },
+        cpu: { type: 'cpu', refreshInterval: 2000 },
+        memory: { type: 'memory', refreshInterval: 2000 },
+        network: { type: 'network', refreshInterval: 2000 },
+        date: { type: 'date', formatting: 'hh:mm a' },
+        dateAlt: { type: 'date', formatting: 'EEEE, MMMM dd, yyyy  󰥔 hh:mm a' },
+        battery: { type: 'battery', refreshInterval: 10000 },
+        audio: { type: 'audio' },
+        media: { type: 'media' },
+        systray: { type: 'systray' },
+      });
+
+      createRoot(document.getElementById('root')).render(<App />);
+
+      function App() {
+        const [output, setOutput] = useState(providers.outputMap);
+        const [showAltClock, setShowAltClock] = useState(false);
+
+        useEffect(() => {
+          providers.onOutput(() => setOutput(providers.outputMap));
+        }, []);
+
+        const glazewm = output.glazewm;
+        const focusedTitle =
+          glazewm?.focusedContainer?.title ||
+          glazewm?.focusedWorkspace?.displayName ||
+          glazewm?.focusedWorkspace?.name ||
+          '';
+
+        // Format network download speed like Waybar's {bandwidthDownBytes}
+        function renderNetwork(net) {
+          if (!net || !net.defaultInterface) {
+            return <span>󰤮 Offline</span>;
+          }
+          const isWifi = net.defaultInterface.type === 'wifi';
+          const icon = isWifi ? '󰤨' : '󰈀';
+          const rx = net.traffic?.received;
+          if (rx && typeof rx.iecValue === 'number') {
+            const val =
+              rx.iecValue >= 10
+                ? Math.round(rx.iecValue)
+                : rx.iecValue.toFixed(1);
+            return (
+              <span>
+                {icon} 󰇚 {val} {rx.iecUnit}
+              </span>
+            );
+          }
+          return (
+            <span>
+              {icon} {net.defaultGateway?.ssid || 'Online'}
+            </span>
+          );
+        }
+
+        // Format audio volume & icon like Waybar's pulseaudio module
+        function renderAudio(audio) {
+          const dev = audio?.defaultPlaybackDevice;
+          if (!dev) return null;
+          const vol = Math.round(dev.volume ?? 0);
+          const isMuted = dev.isMuted || vol === 0;
+          let icon = '󰕾';
+          if (isMuted) icon = '󰝟';
+          else if (vol < 35) icon = '󰕿';
+          else if (vol < 70) icon = '󰖀';
+
+          return (
+            <button
+              className={`pill audio ${isMuted ? 'muted' : ''}`}
+              title={`${dev.name} (${vol}%)`}
+              onClick={() =>
+                audio.setMute?.(!dev.isMuted, { deviceId: dev.id })
+              }
+              onWheel={e => {
+                const delta = e.deltaY < 0 ? 5 : -5;
+                const next = Math.max(0, Math.min(100, vol + delta));
+                audio.setVolume?.(next, { deviceId: dev.id });
+              }}
+            >
+              {isMuted ? '󰝟 Muted' : `${icon} ${vol}%`}
+            </button>
+          );
+        }
+
+        // Format media session like Waybar's media-player.sh
+        const session =
+          output.media?.currentSession || output.media?.allSessions?.[0];
+
+        return (
+          <div className="waybar">
+            {/* LEFT MODULES: Arch/Launcher + Workspaces + Active Window */}
+            <div className="modules-left">
+              <button
+                className="pill custom-launcher"
+                title="Left-Click: Launch Terminal (WezTerm)&#10;Right-Click: Reload GlazeWM Config"
+                onClick={() =>
+                  glazewm?.runCommand('shell-exec wezterm-gui')
+                }
+                onContextMenu={e => {
+                  e.preventDefault();
+                  glazewm?.runCommand('wm-reload-config');
+                }}
+              >
+                󰣇
+              </button>
+
+              {glazewm && (
+                <div className="workspaces">
+                  {glazewm.currentWorkspaces.map(ws => (
+                    <button
+                      key={ws.name}
+                      className={`workspace-btn ${ws.hasFocus ? 'active' : ''} ${ws.isDisplayed ? 'displayed' : ''}`}
+                      onClick={() =>
+                        glazewm.runCommand(`focus --workspace ${ws.name}`)
+                      }
+                      title={`Workspace ${ws.displayName ?? ws.name}`}
+                    >
+                      {ws.displayName ?? ws.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {glazewm?.isPaused && (
+                <button
+                  className="pill paused-btn"
+                  onClick={() => glazewm.runCommand('wm-toggle-pause')}
+                >
+                  PAUSED
+                </button>
+              )}
+
+              {glazewm?.bindingModes?.map(mode => (
+                <button
+                  key={mode.name}
+                  className="pill binding-mode"
+                  onClick={() =>
+                    glazewm.runCommand(
+                      `wm-disable-binding-mode --name ${mode.name}`,
+                    )
+                  }
+                >
+                  {mode.displayName ?? mode.name}
+                </button>
+              ))}
+
+              {focusedTitle && (
+                <div className="pill window-title" title={focusedTitle}>
+                  󰘔 {focusedTitle.length > 34 ? focusedTitle.slice(0, 34) + '…' : focusedTitle}
+                </div>
+              )}
+            </div>
+
+            {/* CENTER MODULES: Media Controls + Clock */}
+            <div className="modules-center">
+              {session && (
+                <>
+                  <button
+                    className="pill media-btn"
+                    title="Previous Track"
+                    onClick={() => output.media.previous?.()}
+                  >
+                    󰒮
+                  </button>
+                  <button
+                    className="pill media-main"
+                    title={`Artist: ${session.artist || 'Unknown'}\nTitle: ${session.title || ''}`}
+                    onClick={() => output.media.togglePlayPause?.()}
+                    onContextMenu={e => {
+                      e.preventDefault();
+                      output.media.next?.();
+                    }}
+                  >
+                    {session.isPlaying ? '󰎈' : '󰏤'}{' '}
+                    {session.artist
+                      ? `${session.artist} — ${session.title}`
+                      : session.title || 'Media Playing'}
+                  </button>
+                  <button
+                    className="pill media-btn"
+                    title="Next Track"
+                    onClick={() => output.media.next?.()}
+                  >
+                    󰒭
+                  </button>
+                </>
+              )}
+
+              <button
+                className="pill clock"
+                title="Click or Right-Click to toggle full date"
+                onClick={() => setShowAltClock(v => !v)}
+                onContextMenu={e => {
+                  e.preventDefault();
+                  setShowAltClock(v => !v);
+                }}
+              >
+                {showAltClock
+                  ? `󰃭 ${output.dateAlt?.formatted}`
+                  : `󰥔 ${output.date?.formatted}`}
+              </button>
+            </div>
+
+            {/* RIGHT MODULES: CPU + Memory + Network + Tray + Audio + Battery + Power */}
+            <div className="modules-right">
+              {output.cpu && (
+                <button
+                  className={`pill cpu ${output.cpu.usage > 85 ? 'high-usage' : ''}`}
+                  title={`CPU Usage: ${Math.round(output.cpu.usage)}%`}
+                  onClick={() =>
+                    glazewm?.runCommand('shell-exec wezterm-gui start btop')
+                  }
+                >
+                   {Math.round(output.cpu.usage)}%
+                </button>
+              )}
+
+              {output.memory && (
+                <button
+                  className={`pill memory ${output.memory.usage > 85 ? 'high-usage' : ''}`}
+                  title={`RAM: ${(output.memory.usedMemory / 1024 ** 3).toFixed(1)} GiB / ${(output.memory.totalMemory / 1024 ** 3).toFixed(1)} GiB (${Math.round(output.memory.usage)}%)`}
+                  onClick={() =>
+                    glazewm?.runCommand('shell-exec wezterm-gui start btop')
+                  }
+                >
+                   {(output.memory.usedMemory / 1024 ** 3).toFixed(1)}G
+                </button>
+              )}
+
+              {output.network && (
+                <div
+                  className="pill network"
+                  title={
+                    output.network.defaultGateway?.ssid ||
+                    output.network.defaultInterface?.friendlyName ||
+                    'Network'
+                  }
+                >
+                  {renderNetwork(output.network)}
+                </div>
+              )}
+
+              {output.systray?.icons?.length > 0 && (
+                <div className="pill systray">
+                  {output.systray.icons.map(icon => (
+                    <div
+                      key={icon.id}
+                      className="systray-icon"
+                      title={icon.tooltip}
+                      onClick={e => {
+                        e.preventDefault();
+                        output.systray.onLeftClick?.(icon.id);
+                      }}
+                      onContextMenu={e => {
+                        e.preventDefault();
+                        output.systray.onRightClick?.(icon.id);
+                      }}
+                    >
+                      <img src={icon.iconUrl} alt={icon.tooltip || ''} />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {renderAudio(output.audio)}
+
+              {output.battery && (
+                <div
+                  className={`pill battery ${
+                    output.battery.isCharging
+                      ? 'charging'
+                      : output.battery.chargePercent <= 15
+                        ? 'critical'
+                        : output.battery.chargePercent <= 30
+                          ? 'warning'
+                          : ''
+                  }`}
+                >
+                  {output.battery.isCharging ? '󰂄' : '󰁹'}{' '}
+                  {Math.round(output.battery.chargePercent)}%
+                </div>
+              )}
+
+              <button
+                className="pill custom-power"
+                title="Left-Click: Lock Screen&#10;Right-Click: Exit GlazeWM"
+                onClick={() =>
+                  glazewm?.runCommand(
+                    'shell-exec rundll32.exe user32.dll,LockWorkStation',
+                  )
+                }
+                onContextMenu={e => {
+                  e.preventDefault();
+                  glazewm?.runCommand('wm-exit');
+                }}
+              >
+                󰐥
+              </button>
+            </div>
+          </div>
+        );
+      }
+    </script>
+  </body>
+</html>

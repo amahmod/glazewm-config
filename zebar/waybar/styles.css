@@ -1,0 +1,312 @@
+@import 'https://www.nerdfonts.com/assets/css/webfont.css';
+
+:root {
+  --main-bg: rgba(26, 27, 38, 0.94);
+  --pill-bg: rgba(30, 30, 46, 0.85);
+  --pill-bg-strong: rgba(30, 30, 46, 0.95);
+  --pill-bg-soft: rgba(30, 30, 46, 0.65);
+  --main-fg: #c0caf5;
+  --dark-fg: #11111b;
+  --accent: #7aa2f7;
+  --arch-bg: #7dcfff;
+  --clock-color: #7aa2f7;
+  --pulseaudio-bg: #bb9af7;
+  --power-bg: #f7768e;
+  --warning-color: #e0af68;
+}
+
+* {
+  box-sizing: border-box;
+  border: none;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  font-family: 'JetBrainsMono Nerd Font', 'JetBrainsMono Nerd Font Mono', ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  color: var(--main-fg);
+  overflow: hidden;
+}
+
+.waybar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 36px;
+  margin: 6px 12px;
+  opacity: 0.95;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modules-left {
+  justify-self: start;
+}
+
+.modules-center {
+  justify-self: center;
+}
+
+.modules-right {
+  justify-self: end;
+}
+
+/* Generic pill base */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  background-color: var(--pill-bg);
+  color: var(--main-fg);
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+}
+
+button.pill {
+  cursor: pointer;
+}
+
+/* Left: Launcher / Logo */
+.custom-launcher {
+  background: var(--arch-bg);
+  color: var(--dark-fg);
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.custom-launcher:hover {
+  box-shadow: 0 0 12px var(--arch-bg);
+  transform: translateY(-1px);
+}
+
+/* Left: Workspaces */
+.workspaces {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(30, 30, 46, 0.8);
+  padding: 3px 6px;
+  border-radius: 16px;
+  gap: 4px;
+}
+
+.workspace-btn {
+  padding: 2px 10px;
+  color: var(--main-fg);
+  background: transparent;
+  border-radius: 12px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.workspace-btn:hover {
+  color: var(--main-fg);
+  background-color: rgba(69, 71, 90, 0.5);
+  opacity: 1;
+}
+
+.workspace-btn.displayed {
+  opacity: 0.9;
+  background-color: rgba(69, 71, 90, 0.35);
+}
+
+.workspace-btn.active {
+  color: var(--dark-fg);
+  background: var(--accent);
+  font-weight: bold;
+  opacity: 1;
+}
+
+/* Left: Active Window Title */
+.window-title {
+  background-color: var(--pill-bg-soft);
+  color: var(--main-fg);
+  padding: 4px 12px;
+  border-radius: 14px;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Binding Mode & Pause Indicator */
+.binding-mode,
+.paused-btn {
+  background-color: var(--power-bg);
+  color: var(--dark-fg);
+  padding: 4px 10px;
+  border-radius: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+/* Center: Media Controls */
+.media-btn {
+  background-color: rgba(30, 30, 46, 0.9);
+  color: var(--arch-bg);
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.media-btn:hover {
+  background-color: var(--arch-bg);
+  color: var(--dark-fg);
+}
+
+.media-main {
+  background: var(--pill-bg-strong);
+  color: var(--pulseaudio-bg);
+  padding: 4px 14px;
+  border-radius: 14px;
+  max-width: 340px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.media-main:hover {
+  box-shadow: 0 0 10px rgba(187, 154, 247, 0.4);
+}
+
+/* Center: Clock */
+.clock {
+  background-color: rgba(30, 30, 46, 0.9);
+  color: var(--clock-color);
+  padding: 4px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.clock:hover {
+  box-shadow: 0 0 10px rgba(122, 162, 247, 0.35);
+}
+
+/* Right: CPU & Memory */
+.cpu,
+.memory {
+  background-color: rgba(30, 30, 46, 0.8);
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.cpu.high-usage,
+.memory.high-usage {
+  color: var(--power-bg);
+}
+
+/* Right: Network */
+.network {
+  background-color: rgba(30, 30, 46, 0.8);
+  color: var(--clock-color);
+  padding: 4px 10px;
+  border-radius: 14px;
+  min-width: 115px;
+  justify-content: center;
+}
+
+/* Right: Systray */
+.systray {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(30, 30, 46, 0.8);
+  padding: 4px 10px;
+  border-radius: 14px;
+}
+
+.systray-icon {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.systray-icon img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* Right: Audio / Pulseaudio */
+.audio {
+  background-color: rgba(30, 30, 46, 0.85);
+  color: var(--pulseaudio-bg);
+  padding: 4px 11px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.audio:hover {
+  background-color: var(--pulseaudio-bg);
+  color: var(--dark-fg);
+  box-shadow: 0 0 12px var(--pulseaudio-bg);
+}
+
+.audio.muted {
+  color: var(--power-bg);
+}
+
+/* Right: Battery */
+.battery {
+  background-color: rgba(30, 30, 46, 0.8);
+  color: var(--arch-bg);
+  padding: 4px 10px;
+  border-radius: 14px;
+}
+
+.battery.charging {
+  color: var(--clock-color);
+}
+
+.battery.warning {
+  color: var(--accent);
+}
+
+.battery.critical {
+  background-color: var(--power-bg);
+  color: var(--dark-fg);
+}
+
+/* Right: Power */
+.custom-power {
+  background-color: rgba(30, 30, 46, 0.85);
+  color: var(--power-bg);
+  padding: 4px 11px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-power:hover {
+  background-color: var(--power-bg);
+  color: var(--dark-fg);
+  box-shadow: 0 0 12px var(--power-bg);
+}
