@@ -219,13 +219,13 @@ keybindings:
 
   # Shift focus in a given direction (SUPER + HJKL / Arrow keys).
   - commands: ['focus --direction left']
-    bindings: ['lwin+h', 'lwin+left', 'alt+left']
+    bindings: ['lwin+h', 'lwin+left']
   - commands: ['focus --direction right']
-    bindings: ['lwin+l', 'lwin+right', 'alt+right']
+    bindings: ['lwin+l', 'lwin+right']
   - commands: ['focus --direction up']
-    bindings: ['lwin+k', 'lwin+up', 'alt+up']
+    bindings: ['lwin+k', 'lwin+up']
   - commands: ['focus --direction down']
-    bindings: ['lwin+j', 'lwin+down', 'alt+down']
+    bindings: ['lwin+j', 'lwin+down']
 
   # Focus previous/left or next/right monitor (SUPER + , / .).
   - commands: ['focus --workspace-in-direction left']
@@ -235,7 +235,7 @@ keybindings:
 
   # Focus last active workspace (SUPER + Tab).
   - commands: ['focus --recent-workspace']
-    bindings: ['lwin+tab', 'alt+d']
+    bindings: ['lwin+tab']
 
   # ---------------------------------
   # -------- SWAP / MOVE ------------
@@ -243,13 +243,13 @@ keybindings:
 
   # Move focused window in a given direction (SUPER + SHIFT + HJKL / Arrow keys).
   - commands: ['move --direction left']
-    bindings: ['lwin+shift+h', 'lwin+shift+left', 'alt+shift+left']
+    bindings: ['lwin+shift+h', 'lwin+shift+left']
   - commands: ['move --direction right']
-    bindings: ['lwin+shift+l', 'lwin+shift+right', 'alt+shift+right']
+    bindings: ['lwin+shift+l', 'lwin+shift+right']
   - commands: ['move --direction up']
-    bindings: ['lwin+shift+k', 'lwin+shift+up', 'alt+shift+up']
+    bindings: ['lwin+shift+k', 'lwin+shift+up']
   - commands: ['move --direction down']
-    bindings: ['lwin+shift+j', 'lwin+shift+down', 'alt+shift+down']
+    bindings: ['lwin+shift+j', 'lwin+shift+down']
 
   # Move focused window to previous/left or next/right monitor (SUPER + SHIFT + , / .).
   - commands: ['move --workspace-in-direction left']
@@ -257,37 +257,23 @@ keybindings:
   - commands: ['move --workspace-in-direction right']
     bindings: ['lwin+shift+oem_period']
 
-  # Move the focused window's parent workspace to a monitor in a given direction.
-  - commands: ['move-workspace --direction left']
-    bindings: ['alt+shift+a']
-  - commands: ['move-workspace --direction right']
-    bindings: ['alt+shift+f']
-  - commands: ['move-workspace --direction up']
-    bindings: ['alt+shift+d']
-  - commands: ['move-workspace --direction down']
-    bindings: ['alt+shift+s']
-
   # ---------------------------------
   # -------- WINDOW RESIZE ----------
   # ---------------------------------
 
   # Resize focused window (Hyprland: SUPER + ALT + HJKL).
   - commands: ['resize --width -2%']
-    bindings: ['lwin+alt+h', 'alt+u']
+    bindings: ['lwin+alt+h']
   - commands: ['resize --width +2%']
-    bindings: ['lwin+alt+l', 'alt+p']
+    bindings: ['lwin+alt+l']
   - commands: ['resize --height -2%']
-    bindings: ['lwin+alt+k', 'alt+i']
+    bindings: ['lwin+alt+k']
   - commands: ['resize --height +2%']
-    bindings: ['lwin+alt+j', 'alt+o']
+    bindings: ['lwin+alt+j']
 
   # Reset window size / split proportions (Hyprland: SUPER + ALT + r / 0).
   - commands: ['toggle-floating', 'toggle-floating']
     bindings: ['lwin+alt+r', 'lwin+alt+0']
-
-  # Enable resize binding mode.
-  - commands: ['wm-enable-binding-mode --name resize']
-    bindings: ['alt+r']
 
   # ---------------------------------
   # -------- WINDOW STATE -----------
@@ -299,27 +285,19 @@ keybindings:
 
   # Toggle fullscreen (SUPER + f).
   - commands: ['toggle-fullscreen']
-    bindings: ['lwin+f', 'alt+f']
+    bindings: ['lwin+f']
 
   # Toggle floating (SUPER + SHIFT + f).
   - commands: ['toggle-floating --centered']
-    bindings: ['lwin+shift+f', 'alt+shift+space']
-
-  # Toggle tiling.
-  - commands: ['toggle-tiling']
-    bindings: ['alt+t']
+    bindings: ['lwin+shift+f']
 
   # Change tiling direction (determines where new tiling windows are inserted).
   - commands: ['toggle-tiling-direction']
-    bindings: ['lwin+v', 'alt+v']
-
-  # Change focus from tiling windows -> floating -> fullscreen.
-  - commands: ['wm-cycle-focus']
-    bindings: ['alt+space']
+    bindings: ['lwin+v']
 
   # Minimize focused window.
   - commands: ['toggle-minimized']
-    bindings: ['lwin+m', 'alt+m']
+    bindings: ['lwin+m']
 
   # ---------------------------------
   # -------- LAUNCHER & SUBMAPS -----
@@ -327,7 +305,7 @@ keybindings:
 
   # Launch WezTerm terminal (SUPER + Enter).
   - commands: ['shell-exec wezterm-gui']
-    bindings: ['lwin+enter', 'alt+enter']
+    bindings: ['lwin+enter']
 
   # Enter application launcher submap (SUPER + o).
   - commands: ['wm-enable-binding-mode --name apps']
@@ -343,15 +321,15 @@ keybindings:
 
   # Quit GlazeWM (Hyprland: SUPER + ALT + q).
   - commands: ['wm-exit']
-    bindings: ['lwin+alt+q', 'alt+shift+e']
+    bindings: ['lwin+alt+q']
 
   # Reload configuration file (SUPER + SHIFT + r).
   - commands: ['wm-reload-config']
-    bindings: ['lwin+shift+r', 'alt+shift+r']
+    bindings: ['lwin+shift+r']
 
   # Redraw all windows.
   - commands: ['wm-redraw']
-    bindings: ['lwin+shift+w', 'alt+shift+w']
+    bindings: ['lwin+shift+w']
 
   # Reload Zebar status bar (Hyprland: SUPER + SHIFT + b).
   - commands: ['shell-exec --hide-window cmd /c "taskkill /IM zebar.exe /F & start """" zebar"']
@@ -359,7 +337,7 @@ keybindings:
 
   # Pause/unpause window management and all other keybindings.
   - commands: ['wm-toggle-pause']
-    bindings: ['alt+shift+p']
+    bindings: ['lwin+shift+p']
 
   # ---------------------------------
   # -------- WORKSPACES -------------
@@ -367,50 +345,50 @@ keybindings:
 
   # Focus next/previous workspace on current monitor (Hyprland: SUPER + ] / [).
   - commands: ['focus --next-active-workspace-on-monitor']
-    bindings: ['lwin+oem_close_brackets', 'alt+s']
+    bindings: ['lwin+oem_close_brackets']
   - commands: ['focus --prev-active-workspace-on-monitor']
-    bindings: ['lwin+oem_open_brackets', 'alt+a']
+    bindings: ['lwin+oem_open_brackets']
 
   # Focus workspaces 1-10 (SUPER + 1..9, 0).
   - commands: ['focus --workspace 1']
-    bindings: ['lwin+1', 'alt+1']
+    bindings: ['lwin+1']
   - commands: ['focus --workspace 2']
-    bindings: ['lwin+2', 'alt+2']
+    bindings: ['lwin+2']
   - commands: ['focus --workspace 3']
-    bindings: ['lwin+3', 'alt+3']
+    bindings: ['lwin+3']
   - commands: ['focus --workspace 4']
-    bindings: ['lwin+4', 'alt+4']
+    bindings: ['lwin+4']
   - commands: ['focus --workspace 5']
-    bindings: ['lwin+5', 'alt+5']
+    bindings: ['lwin+5']
   - commands: ['focus --workspace 6']
-    bindings: ['lwin+6', 'alt+6']
+    bindings: ['lwin+6']
   - commands: ['focus --workspace 7']
-    bindings: ['lwin+7', 'alt+7']
+    bindings: ['lwin+7']
   - commands: ['focus --workspace 8']
-    bindings: ['lwin+8', 'alt+8']
+    bindings: ['lwin+8']
   - commands: ['focus --workspace 9']
-    bindings: ['lwin+9', 'alt+9']
+    bindings: ['lwin+9']
   - commands: ['focus --workspace 10']
-    bindings: ['lwin+0', 'alt+0']
+    bindings: ['lwin+0']
 
   # Move focused window to workspaces 1-10 and follow focus (SUPER + SHIFT + 1..9, 0).
   - commands: ['move --workspace 1', 'focus --workspace 1']
-    bindings: ['lwin+shift+1', 'alt+shift+1']
+    bindings: ['lwin+shift+1']
   - commands: ['move --workspace 2', 'focus --workspace 2']
-    bindings: ['lwin+shift+2', 'alt+shift+2']
+    bindings: ['lwin+shift+2']
   - commands: ['move --workspace 3', 'focus --workspace 3']
-    bindings: ['lwin+shift+3', 'alt+shift+3']
+    bindings: ['lwin+shift+3']
   - commands: ['move --workspace 4', 'focus --workspace 4']
-    bindings: ['lwin+shift+4', 'alt+shift+4']
+    bindings: ['lwin+shift+4']
   - commands: ['move --workspace 5', 'focus --workspace 5']
-    bindings: ['lwin+shift+5', 'alt+shift+5']
+    bindings: ['lwin+shift+5']
   - commands: ['move --workspace 6', 'focus --workspace 6']
-    bindings: ['lwin+shift+6', 'alt+shift+6']
+    bindings: ['lwin+shift+6']
   - commands: ['move --workspace 7', 'focus --workspace 7']
-    bindings: ['lwin+shift+7', 'alt+shift+7']
+    bindings: ['lwin+shift+7']
   - commands: ['move --workspace 8', 'focus --workspace 8']
-    bindings: ['lwin+shift+8', 'alt+shift+8']
+    bindings: ['lwin+shift+8']
   - commands: ['move --workspace 9', 'focus --workspace 9']
-    bindings: ['lwin+shift+9', 'alt+shift+9']
+    bindings: ['lwin+shift+9']
   - commands: ['move --workspace 10', 'focus --workspace 10']
-    bindings: ['lwin+shift+0', 'alt+shift+0']
+    bindings: ['lwin+shift+0']
