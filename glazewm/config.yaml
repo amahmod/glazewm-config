@@ -173,9 +173,9 @@ binding_modes:
   - name: 'resize'
     keybindings:
       - commands: ['resize --width -2%']
-        bindings: ['h', 'left']
+        bindings: ['l', 'left']
       - commands: ['resize --width +2%']
-        bindings: ['l', 'right']
+        bindings: ['h', 'right']
       - commands: ['resize --height +2%']
         bindings: ['k', 'up']
       - commands: ['resize --height -2%']

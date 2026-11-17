@@ -1,5 +1,3 @@
-@import 'https://www.nerdfonts.com/assets/css/webfont.css';
-
 :root {
   --main-bg: rgba(26, 27, 38, 0.94);
   --pill-bg: rgba(30, 30, 46, 0.85);
@@ -21,7 +19,7 @@
   margin: 0;
   padding: 0;
   user-select: none;
-  font-family: 'JetBrainsMono Nerd Font', 'JetBrainsMono Nerd Font Mono', ui-monospace, monospace;
+  font-family: 'JetBrainsMono Nerd Font', 'JetBrains Mono', 'Cascadia Code', 'Consolas', ui-monospace, monospace;
   font-size: 13px;
   font-weight: bold;
 }
@@ -65,6 +63,20 @@ body,
   justify-self: end;
 }
 
+/* Inline SVG icon styling */
+.icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon-sm {
+  width: 13px;
+  height: 13px;
+}
+
 /* Generic pill base */
 .pill {
   display: inline-flex;
@@ -87,11 +99,15 @@ button.pill {
 .custom-launcher {
   background: var(--arch-bg);
   color: var(--dark-fg);
-  padding: 4px 12px;
+  padding: 5px 12px;
   border-radius: 14px;
-  font-size: 15px;
   cursor: pointer;
   transition: all 0.25s ease;
+}
+
+.custom-launcher .icon {
+  width: 16px;
+  height: 16px;
 }
 
 .custom-launcher:hover {
@@ -145,7 +161,12 @@ button.pill {
   border-radius: 14px;
   max-width: 320px;
   overflow: hidden;
+}
+
+.window-title-text {
+  overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Binding Mode & Pause Indicator */
@@ -164,9 +185,8 @@ button.pill {
 .media-btn {
   background-color: rgba(30, 30, 46, 0.9);
   color: var(--arch-bg);
-  padding: 4px 10px;
+  padding: 5px 10px;
   border-radius: 14px;
-  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -183,8 +203,13 @@ button.pill {
   border-radius: 14px;
   max-width: 340px;
   overflow: hidden;
-  text-overflow: ellipsis;
   cursor: pointer;
+}
+
+.media-main-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .media-main:hover {
@@ -299,7 +324,7 @@ button.pill {
 .custom-power {
   background-color: rgba(30, 30, 46, 0.85);
   color: var(--power-bg);
-  padding: 4px 11px;
+  padding: 5px 11px;
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s ease;

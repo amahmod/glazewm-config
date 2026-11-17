@@ -27,12 +27,293 @@
         memory: { type: 'memory', refreshInterval: 2000 },
         network: { type: 'network', refreshInterval: 2000 },
         date: { type: 'date', formatting: 'hh:mm a' },
-        dateAlt: { type: 'date', formatting: 'EEEE, MMMM dd, yyyy  󰥔 hh:mm a' },
+        dateFull: { type: 'date', formatting: 'EEEE, MMMM dd, yyyy' },
         battery: { type: 'battery', refreshInterval: 10000 },
         audio: { type: 'audio' },
         media: { type: 'media' },
         systray: { type: 'systray' },
       });
+
+      // Crisp inline SVG icons (Lucide / Material-style)
+      const Icons = {
+        arch: (
+          <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L10.3 6.2C9.5 8.1 8.8 9.8 7.8 11.9C8.6 12.7 9.7 13.7 11.2 14.7C9.6 14 8.4 13.3 7.4 12.6C5.6 16.3 3.4 20.6 2 22C4.7 20.4 7.1 19.4 9.2 19C9.1 18.4 9 17.7 9 17C9.1 15.1 10.3 13.6 11.8 13.7C13.3 13.8 14.4 15.4 14.3 17.3C14.3 17.9 14.2 18.5 14 19C16.1 19.4 18.5 20.4 21.2 22C20.5 20.7 19.8 19.4 19 17.8C17.9 16.9 16.7 15.8 14.5 14.6C16.1 15 17.3 15.6 18.2 16.2C15.1 10.4 13.9 7.6 12 2Z" />
+          </svg>
+        ),
+        window: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="M2 8h20" />
+            <path d="M6 6h.01" />
+            <path d="M10 6h.01" />
+          </svg>
+        ),
+        prev: (
+          <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z" />
+          </svg>
+        ),
+        next: (
+          <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+          </svg>
+        ),
+        play: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+          </svg>
+        ),
+        pause: (
+          <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        ),
+        clock: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+        ),
+        calendar: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+        ),
+        cpu: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="4" y="4" width="16" height="16" rx="2" />
+            <rect x="9" y="9" width="6" height="6" />
+            <path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2" />
+          </svg>
+        ),
+        memory: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M6 19v-3M10 19v-3M14 19v-3M18 19v-3M8 11V9M16 11V9M12 11V9M2 15h20" />
+            <path d="M2 7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.1a2 2 0 0 0 0 3.837V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-5.1a2 2 0 0 0 0-3.837Z" />
+          </svg>
+        ),
+        wifi: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 20h.01" />
+            <path d="M2 8.82a15 15 0 0 1 20 0" />
+            <path d="M5 12.859a10 10 0 0 1 14 0" />
+            <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+          </svg>
+        ),
+        wifiOff: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="2" y1="2" x2="22" y2="22" />
+            <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+            <path d="M5 12.859a10 10 0 0 1 5.17-2.69" />
+            <path d="M19 12.859a10 10 0 0 0-2.007-1.523" />
+            <path d="M2 8.82a15 15 0 0 1 4.177-2.643" />
+            <path d="M22 8.82a15 15 0 0 0-11.288-3.764" />
+            <path d="M12 20h.01" />
+          </svg>
+        ),
+        ethernet: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="9" y="2" width="6" height="6" rx="1" />
+            <rect x="2" y="16" width="6" height="6" rx="1" />
+            <rect x="16" y="16" width="6" height="6" rx="1" />
+            <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
+            <path d="M12 12V8" />
+          </svg>
+        ),
+        download: (
+          <svg
+            className="icon icon-sm"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 5v14" />
+            <path d="m19 12-7 7-7-7" />
+          </svg>
+        ),
+        volumeHigh: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+          </svg>
+        ),
+        volumeMed: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+          </svg>
+        ),
+        volumeLow: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          </svg>
+        ),
+        volumeMute: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <line x1="22" y1="9" x2="16" y2="15" />
+            <line x1="16" y1="9" x2="22" y2="15" />
+          </svg>
+        ),
+        battery: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="2" y="7" width="16" height="10" rx="2" ry="2" />
+            <line x1="22" y1="11" x2="22" y2="13" />
+          </svg>
+        ),
+        batteryCharging: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2" />
+            <path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1" />
+            <path d="m11 7-3 5h4l-3 5" />
+            <line x1="22" y1="11" x2="22" y2="13" />
+          </svg>
+        ),
+        power: (
+          <svg
+            className="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+            <line x1="12" y1="2" x2="12" y2="12" />
+          </svg>
+        ),
+      };
 
       createRoot(document.getElementById('root')).render(<App />);
 
@@ -54,10 +335,15 @@
         // Format network download speed like Waybar's {bandwidthDownBytes}
         function renderNetwork(net) {
           if (!net || !net.defaultInterface) {
-            return <span>󰤮 Offline</span>;
+            return (
+              <>
+                {Icons.wifiOff}
+                <span>Offline</span>
+              </>
+            );
           }
           const isWifi = net.defaultInterface.type === 'wifi';
-          const icon = isWifi ? '󰤨' : '󰈀';
+          const netIcon = isWifi ? Icons.wifi : Icons.ethernet;
           const rx = net.traffic?.received;
           if (rx && typeof rx.iecValue === 'number') {
             const val =
@@ -65,15 +351,20 @@
                 ? Math.round(rx.iecValue)
                 : rx.iecValue.toFixed(1);
             return (
-              <span>
-                {icon} 󰇚 {val} {rx.iecUnit}
-              </span>
+              <>
+                {netIcon}
+                {Icons.download}
+                <span>
+                  {val} {rx.iecUnit}
+                </span>
+              </>
             );
           }
           return (
-            <span>
-              {icon} {net.defaultGateway?.ssid || 'Online'}
-            </span>
+            <>
+              {netIcon}
+              <span>{net.defaultGateway?.ssid || 'Online'}</span>
+            </>
           );
         }
 
@@ -83,10 +374,10 @@
           if (!dev) return null;
           const vol = Math.round(dev.volume ?? 0);
           const isMuted = dev.isMuted || vol === 0;
-          let icon = '󰕾';
-          if (isMuted) icon = '󰝟';
-          else if (vol < 35) icon = '󰕿';
-          else if (vol < 70) icon = '󰖀';
+          let volIcon = Icons.volumeHigh;
+          if (isMuted) volIcon = Icons.volumeMute;
+          else if (vol < 35) volIcon = Icons.volumeLow;
+          else if (vol < 70) volIcon = Icons.volumeMed;
 
           return (
             <button
@@ -101,7 +392,8 @@
                 audio.setVolume?.(next, { deviceId: dev.id });
               }}
             >
-              {isMuted ? '󰝟 Muted' : `${icon} ${vol}%`}
+              {volIcon}
+              <span>{isMuted ? 'Muted' : `${vol}%`}</span>
             </button>
           );
         }
@@ -125,7 +417,7 @@
                   glazewm?.runCommand('wm-reload-config');
                 }}
               >
-                󰣇
+                {Icons.arch}
               </button>
 
               {glazewm && (
@@ -170,7 +462,12 @@
 
               {focusedTitle && (
                 <div className="pill window-title" title={focusedTitle}>
-                  󰘔 {focusedTitle.length > 34 ? focusedTitle.slice(0, 34) + '…' : focusedTitle}
+                  {Icons.window}
+                  <span className="window-title-text">
+                    {focusedTitle.length > 34
+                      ? focusedTitle.slice(0, 34) + '…'
+                      : focusedTitle}
+                  </span>
                 </div>
               )}
             </div>
@@ -184,7 +481,7 @@
                     title="Previous Track"
                     onClick={() => output.media.previous?.()}
                   >
-                    󰒮
+                    {Icons.prev}
                   </button>
                   <button
                     className="pill media-main"
@@ -195,17 +492,19 @@
                       output.media.next?.();
                     }}
                   >
-                    {session.isPlaying ? '󰎈' : '󰏤'}{' '}
-                    {session.artist
-                      ? `${session.artist} — ${session.title}`
-                      : session.title || 'Media Playing'}
+                    {session.isPlaying ? Icons.play : Icons.pause}
+                    <span className="media-main-text">
+                      {session.artist
+                        ? `${session.artist} — ${session.title}`
+                        : session.title || 'Media Playing'}
+                    </span>
                   </button>
                   <button
                     className="pill media-btn"
                     title="Next Track"
                     onClick={() => output.media.next?.()}
                   >
-                    󰒭
+                    {Icons.next}
                   </button>
                 </>
               )}
@@ -219,9 +518,19 @@
                   setShowAltClock(v => !v);
                 }}
               >
-                {showAltClock
-                  ? `󰃭 ${output.dateAlt?.formatted}`
-                  : `󰥔 ${output.date?.formatted}`}
+                {showAltClock ? (
+                  <>
+                    {Icons.calendar}
+                    <span>{output.dateFull?.formatted}</span>
+                    {Icons.clock}
+                    <span>{output.date?.formatted}</span>
+                  </>
+                ) : (
+                  <>
+                    {Icons.clock}
+                    <span>{output.date?.formatted}</span>
+                  </>
+                )}
               </button>
             </div>
 
@@ -235,7 +544,8 @@
                     glazewm?.runCommand('shell-exec wezterm-gui start btop')
                   }
                 >
-                   {Math.round(output.cpu.usage)}%
+                  {Icons.cpu}
+                  <span>{Math.round(output.cpu.usage)}%</span>
                 </button>
               )}
 
@@ -247,7 +557,10 @@
                     glazewm?.runCommand('shell-exec wezterm-gui start btop')
                   }
                 >
-                   {(output.memory.usedMemory / 1024 ** 3).toFixed(1)}G
+                  {Icons.memory}
+                  <span>
+                    {(output.memory.usedMemory / 1024 ** 3).toFixed(1)}G
+                  </span>
                 </button>
               )}
 
@@ -300,8 +613,10 @@
                           : ''
                   }`}
                 >
-                  {output.battery.isCharging ? '󰂄' : '󰁹'}{' '}
-                  {Math.round(output.battery.chargePercent)}%
+                  {output.battery.isCharging
+                    ? Icons.batteryCharging
+                    : Icons.battery}
+                  <span>{Math.round(output.battery.chargePercent)}%</span>
                 </div>
               )}
 
@@ -318,7 +633,7 @@
                   glazewm?.runCommand('wm-exit');
                 }}
               >
-                󰐥
+                {Icons.power}
               </button>
             </div>
           </div>
