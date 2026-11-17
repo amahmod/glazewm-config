@@ -354,7 +354,7 @@ keybindings:
     bindings: ['lwin+shift+w', 'alt+shift+w']
 
   # Reload Zebar status bar (Hyprland: SUPER + SHIFT + b).
-  - commands: ['shell-exec taskkill /IM zebar.exe /F', 'shell-exec zebar']
+  - commands: ['shell-exec --hide-window cmd /c "taskkill /IM zebar.exe /F & start """" zebar"']
     bindings: ['lwin+shift+b']
 
   # Pause/unpause window management and all other keybindings.
